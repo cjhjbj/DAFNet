@@ -18,6 +18,7 @@ Download the datasets and organize them as follows:
 
 ## Training
 Download 'vgg_normalised.pth' from [here](https://drive.google.com/file/d/1BinnwM5AmIcVubr16tPTqxMjUCE8iu5M/view)
+
 First, run `python -m visdom.server`
 
 Run the following commands for training:
