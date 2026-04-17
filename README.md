@@ -41,10 +41,11 @@ python train.py --content_path [path to content training dataset] \
                 --lambda_content 1 \
                 --shallow_layer \
                 --lambda_decouple_c 1 \
-                --lambda_decouple_s 1 
+                --lambda_decouple_s 1
+```
 ## Test
 Run the following commands for testing:
-
+```bash
 python test.py --content_path datasets/contents \
                --style_path datasets/styles \
                --name DAF_test \
@@ -55,3 +56,4 @@ python test.py --content_path datasets/contents \
                --image_encoder_path /other/vgg_normalised.pth \
                --gpu_ids 0 \
                --shallow_layer
+```
