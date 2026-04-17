@@ -8,8 +8,7 @@ The content images are from the MS-COCO dataset, and the style images are from t
 
 - MS-COCO dataset: [https://cocodataset.org/](https://cocodataset.org/)
 - WikiArt dataset: [https://huggingface.co/datasets/huggan/wikiart](https://huggingface.co/datasets/huggan/wikiart)
-- DressCode dataset：[https://github.com/aimagelab/dress-code](https://github.com/aimagelab/dress-code)
-
+- DressCode dataset: [https://github.com/aimagelab/dress-code](https://github.com/aimagelab/dress-code)
 
 Download the datasets and organize them as follows:
 - Training content images: `/train2014`
@@ -18,11 +17,10 @@ Download the datasets and organize them as follows:
 - Test style images: `datasets/styles/`
 
 ## Training
-
-First, run python -m visdom.server
+First, run `python -m visdom.server`
 
 Run the following commands for training:
-
+```bash
 python train.py --content_path [path to content training dataset] \
                 --style_path [path to style training dataset] \
                 --name DAF_test \
