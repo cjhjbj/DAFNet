@@ -18,6 +18,9 @@ Download the datasets and organize them as follows:
 - Test style images: `datasets/styles/`
 
 ## Training
+
+First, run python -m visdom.server
+
 Run the following commands for training:
 
 python train.py --content_path [path to content training dataset] \
