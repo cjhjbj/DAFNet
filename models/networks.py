@@ -112,13 +112,13 @@ def mean_variance_norm(feat):
 
 class StyleOffsetPredictor(nn.Module):
     def __init__(self,
-                 style_in_channels,  # 风格特征F_s.s的输入通道数
-                 content_in_channels,  # 内容特征F_c.c的输入通道数（如960）
+                 style_in_channels,
+                 content_in_channels,  
                  hidden_channels=128,
-                 out_channels=512):  # 新增：目标输出通道数（固定为512）
+                 out_channels=512):  
         super(StyleOffsetPredictor, self).__init__()
 
-        # 1. 风格特征处理分支：Conv → ReLU → AvgPool（完全保留）
+
         self.style_encoder = nn.Sequential(
             nn.Conv2d(style_in_channels, hidden_channels, kernel_size=3),
             nn.ReflectionPad2d((1, 1, 1, 1)),
@@ -126,43 +126,35 @@ class StyleOffsetPredictor(nn.Module):
             nn.AdaptiveAvgPool2d(output_size=(1, 1))
         )
 
-        # 2. 生成缩放因子和偏移量（输出维度仍匹配content_in_channels，保证仿射效果）
+ 
         self.scale_predictor = nn.Linear(hidden_channels, content_in_channels)
         self.shift_predictor = nn.Linear(hidden_channels, content_in_channels)
 
-        # 3. 新增：通道融合层（1×1卷积将content_in_channels→512，无激活，避免破坏特征）
+
         self.channel_fusion = nn.Conv2d(
             in_channels=content_in_channels,
             out_channels=out_channels,
-            kernel_size=1,  # 仅调整通道，不改变空间维度
+            kernel_size=1, 
             bias=True
         )
 
     def forward(self, F_c_c, F_s_s):
-        """
-        参数:
-            F_c_c: 内容特征图，shape=[B, C_content, H, W]（如B,960,16,16）
-            F_s_s: 风格特征图，shape=[B, C_style, H_s, W_s]
-        返回:
-            F_c_s_1: 调整后的内容特征图，shape=[B, 512, H, W]
-        """
-        # Step 1: 处理风格特征，得到全局统计向量（完全保留）
+
         F_c_c_norm = mean_variance_norm(F_c_c)
         style_feat = self.style_encoder(F_s_s)  # shape=[B, hidden_channels, 1, 1]
         style_feat = style_feat.flatten(1)  # shape=[B, hidden_channels]
 
-        # Step 2: 预测缩放因子和偏移量（完全保留）
+
         scale = self.scale_predictor(style_feat)  # shape=[B, C_content]
         shift = self.shift_predictor(style_feat)  # shape=[B, C_content]
 
-        # Step 3: 调整维度（完全保留）
+
         scale = scale.view(scale.size(0), scale.size(1), 1, 1)
         shift = shift.view(shift.size(0), shift.size(1), 1, 1)
 
-        # Step 4: 仿射变换（完全保留）
+  
         F_c_s_affine = F_c_c_norm * scale + shift  # shape=[B, C_content, H, W]
 
-        # Step 5: 新增：通道融合，缩减到
         F_c_s_1 = self.channel_fusion(F_c_s_affine)  # shape=[B, 512, H, W]
 
         return F_c_s_1
@@ -244,7 +236,7 @@ class DualOutputFeatureNet_IN(nn.Module):
         )
 
     def forward(self, x):
-        assert len(x.shape) == 4, f"输入必须是4维特征图，当前维度：{x.shape}"
+        assert len(x.shape) == 4, f"{x.shape}"
 
         feat = self.backbone(x)
         style = self.branch1(feat)
