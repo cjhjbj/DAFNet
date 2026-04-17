@@ -19,6 +19,7 @@ Download the datasets and organize them as follows:
 
 ## Training
 Run the following commands for training:
+
 python train.py --content_path [path to content training dataset] \
                 --style_path [path to style training dataset] \
                 --name DAF_test \
@@ -42,6 +43,7 @@ python train.py --content_path [path to content training dataset] \
                 --lambda_decouple_s 1 
 ## Test
 Run the following commands for testing:
+
 python test.py --content_path datasets/contents \
                --style_path datasets/styles \
                --name DAF_test \
