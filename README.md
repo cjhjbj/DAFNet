@@ -7,7 +7,7 @@ This code has been tested with Python 3.12.7, PyTorch 2.6.0 and torchvision 0.21
 The content images are from the MS-COCO dataset, and the style images are from the WikiArt dataset.
 
 - MS-COCO dataset: [https://cocodataset.org/](https://cocodataset.org/)
-- WikiArt dataset: [https://www.kaggle.com/c/painter-by-numbers](https://huggingface.co/datasets/huggan/wikiart](https://www.kaggle.com/c/painter-by-numbers](https://huggingface.co/datasets/huggan/wikiart)
+- WikiArt dataset: [https://www.kaggle.com/c/painter-by-numbers](https://huggingface.co/datasets/huggan/wikiart)
 - DressCode dataset：[https://github.com/aimagelab/dress-code](https://github.com/aimagelab/dress-code)
 
 
